@@ -25,7 +25,6 @@ public class HelloHandler extends SimpleChannelHandler {
             super.messageReceived(ctx, e);
             Thread.sleep(5000);
         }
-
     }
 
     @Override
@@ -37,10 +36,8 @@ public class HelloHandler extends SimpleChannelHandler {
     @Override
     public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
         logger.info("channel connected !");
-            logger.warn("send hi !");
-            ctx.getChannel().write("hi");
-            super.channelConnected(ctx, e);
-//            Thread.sleep(5000);
+        ctx.getChannel().write("welcome !");
+        super.channelConnected(ctx, e);
 
     }
 
