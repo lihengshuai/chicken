@@ -1,10 +1,15 @@
 package com.loki.server;
 
+import org.jboss.netty.channel.ChannelEvent;
+import org.jboss.netty.channel.ChannelFuture;
+import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.jboss.netty.handler.timeout.IdleState;
+import org.jboss.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,16 +20,52 @@ public class HelloHandler extends SimpleChannelHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(HelloHandler.class);
 
+    /**
+     * 事件触发
+     */
+    @Override
+    public void handleUpstream(final ChannelHandlerContext ctx, ChannelEvent evt)
+        throws Exception {
+
+        if(evt instanceof IdleStateEvent)
+        {
+            //No data was either received or sent for a while.
+            if( ((IdleStateEvent) evt).getState() == IdleState.ALL_IDLE )
+            {
+                System.out.println("提示玩家下线");
+                //写数据返回个客户端
+                ChannelFuture write = ctx.getChannel().write("time out you lost");
+                //给write方法添加一个侦听器
+                //一开始，没有进行读写操作的时候，强制关闭通道。
+                write.addListener(new ChannelFutureListener() {
+
+                    @Override
+                    public void operationComplete(ChannelFuture write) throws Exception {
+
+                        // TODO Auto-generated method stub
+
+                        ctx.getChannel().close();//关闭通道
+                    }
+                });
+            }
+        }else{
+            // TODO Auto-generated method stub
+            super.handleUpstream(ctx, evt);
+        }
+
+
+
+    }
+
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         logger.info("message  received !");
         logger.info("get message info :"+e.getMessage());
         //send message
-        while (true){
             ctx.getChannel().write("hi");
             super.messageReceived(ctx, e);
-            Thread.sleep(5000);
-        }
+//            Thread.sleep(5000);
+
     }
 
     @Override
