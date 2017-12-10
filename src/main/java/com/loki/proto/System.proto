@@ -1,0 +1,14 @@
+option java_package = "com.game2sky.publib.communication.game.system";
+
+//#region 系统消息 1000 - 1099
+
+//系统消息
+message SystemMessage { //1000
+	required string text = 1;
+}
+
+//服务器返回的错误消息
+message ErrorMessage { //1001
+    required int32 messageID = 1; //因出错而没能返回的期望消息的ID
+    required string text = 2;
+}

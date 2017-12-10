@@ -1,0 +1,9 @@
+//这里声明输出的java的包名
+option java_package = "com.loki.bean";
+//这里声明输出的java的类名
+option java_outer_classname = "PersonProto";
+
+message Person {
+  required string name = 1;
+  required int32 id = 2;
+}
