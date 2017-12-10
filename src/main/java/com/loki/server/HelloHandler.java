@@ -32,9 +32,10 @@ public class HelloHandler extends SimpleChannelHandler {
             //No data was either received or sent for a while.
             if( ((IdleStateEvent) evt).getState() == IdleState.ALL_IDLE )
             {
+
                 System.out.println("发送了一次心跳");
                 //写数据返回个客户端
-                ChannelFuture write = ctx.getChannel().write("瓜皮一号");
+//                ChannelFuture write = ctx.getChannel().write("瓜皮一号");
                 //给write方法添加一个侦听器
                 //一开始，没有进行读写操作的时候，强制关闭通道。
 //                write.addListener(new ChannelFutureListener() {
@@ -47,6 +48,23 @@ public class HelloHandler extends SimpleChannelHandler {
 //                        ctx.getChannel().close();//关闭通道
 //                    }
 //                });
+
+                System.out.println("提示玩家下线");
+                //写数据返回个客户端
+                ChannelFuture write = ctx.getChannel().write("time out you lost");
+                //给write方法添加一个侦听器
+                //一开始，没有进行读写操作的时候，强制关闭通道。
+                write.addListener(new ChannelFutureListener() {
+
+                    @Override
+                    public void operationComplete(ChannelFuture write) throws Exception {
+
+                        // TODO Auto-generated method stub
+
+                        ctx.getChannel().close();//关闭通道
+                    }
+                });
+
             }
         }else{
             // TODO Auto-generated method stub

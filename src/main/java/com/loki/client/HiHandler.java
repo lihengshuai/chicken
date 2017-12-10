@@ -17,7 +17,8 @@ public class HiHandler extends SimpleChannelHandler{
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-        logger.info("收到消息："+e.getMessage());
+
+        logger.info("收到消息"+e.getMessage());
 //        ctx.getChannel().write("happy !");
         super.messageReceived(ctx, e);
     }

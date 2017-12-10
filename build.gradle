@@ -29,8 +29,12 @@ repositories {
 dependencies {
 //	compile('org.springframework.boot:spring-boot-starter')
 	compile( "org.jboss.netty:netty:3.2.5.Final")
+
 	compile("com.google.protobuf:protobuf-java:3.3.0")
 	compile("com.googlecode.protobuf-java-format:protobuf-java-format:1.4")
+
+//	compile ("io.netty:netty:4.0.0.Alpha8")
+
 	compile("org.springframework.boot:spring-boot-starter-web")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
